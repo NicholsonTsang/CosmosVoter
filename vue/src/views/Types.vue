@@ -2,6 +2,7 @@
 	<div>
 		<div class="container">
 			<!-- this line is used by starport scaffolding # 4 -->
+		<SpType modulePath="cosmonaut.voter.voter" moduleType="Vote"  />
 		<SpType modulePath="cosmonaut.voter.voter" moduleType="Poll"  />
 		</div>
 	</div>

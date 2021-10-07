@@ -4,14 +4,20 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
+import { MsgCreateVote } from "./types/voter/tx";
 import { MsgUpdatePoll } from "./types/voter/tx";
 import { MsgCreatePoll } from "./types/voter/tx";
+import { MsgDeleteVote } from "./types/voter/tx";
+import { MsgUpdateVote } from "./types/voter/tx";
 import { MsgDeletePoll } from "./types/voter/tx";
 
 
 const types = [
+  ["/cosmonaut.voter.voter.MsgCreateVote", MsgCreateVote],
   ["/cosmonaut.voter.voter.MsgUpdatePoll", MsgUpdatePoll],
   ["/cosmonaut.voter.voter.MsgCreatePoll", MsgCreatePoll],
+  ["/cosmonaut.voter.voter.MsgDeleteVote", MsgDeleteVote],
+  ["/cosmonaut.voter.voter.MsgUpdateVote", MsgUpdateVote],
   ["/cosmonaut.voter.voter.MsgDeletePoll", MsgDeletePoll],
   
 ];
@@ -41,8 +47,11 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
+    msgCreateVote: (data: MsgCreateVote): EncodeObject => ({ typeUrl: "/cosmonaut.voter.voter.MsgCreateVote", value: data }),
     msgUpdatePoll: (data: MsgUpdatePoll): EncodeObject => ({ typeUrl: "/cosmonaut.voter.voter.MsgUpdatePoll", value: data }),
     msgCreatePoll: (data: MsgCreatePoll): EncodeObject => ({ typeUrl: "/cosmonaut.voter.voter.MsgCreatePoll", value: data }),
+    msgDeleteVote: (data: MsgDeleteVote): EncodeObject => ({ typeUrl: "/cosmonaut.voter.voter.MsgDeleteVote", value: data }),
+    msgUpdateVote: (data: MsgUpdateVote): EncodeObject => ({ typeUrl: "/cosmonaut.voter.voter.MsgUpdateVote", value: data }),
     msgDeletePoll: (data: MsgDeletePoll): EncodeObject => ({ typeUrl: "/cosmonaut.voter.voter.MsgDeletePoll", value: data }),
     
   };

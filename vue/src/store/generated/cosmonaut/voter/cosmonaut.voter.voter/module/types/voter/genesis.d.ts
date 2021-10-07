@@ -1,9 +1,14 @@
 import { Writer, Reader } from 'protobufjs/minimal';
+import { Vote } from '../voter/vote';
 import { Poll } from '../voter/poll';
 export declare const protobufPackage = "cosmonaut.voter.voter";
 /** GenesisState defines the voter module's genesis state. */
 export interface GenesisState {
     /** this line is used by starport scaffolding # genesis/proto/state */
+    voteList: Vote[];
+    /** this line is used by starport scaffolding # genesis/proto/stateField */
+    voteCount: number;
+    /** this line is used by starport scaffolding # genesis/proto/stateField */
     pollList: Poll[];
     /** this line is used by starport scaffolding # genesis/proto/stateField */
     pollCount: number;
