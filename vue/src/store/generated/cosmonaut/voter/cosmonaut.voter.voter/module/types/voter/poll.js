@@ -14,8 +14,8 @@ export const Poll = {
         if (message.title !== '') {
             writer.uint32(26).string(message.title);
         }
-        if (message.options !== '') {
-            writer.uint32(34).string(message.options);
+        for (const v of message.options) {
+            writer.uint32(34).string(v);
         }
         return writer;
     },
@@ -23,6 +23,7 @@ export const Poll = {
         const reader = input instanceof Uint8Array ? new Reader(input) : input;
         let end = length === undefined ? reader.len : reader.pos + length;
         const message = { ...basePoll };
+        message.options = [];
         while (reader.pos < end) {
             const tag = reader.uint32();
             switch (tag >>> 3) {
@@ -36,7 +37,7 @@ export const Poll = {
                     message.title = reader.string();
                     break;
                 case 4:
-                    message.options = reader.string();
+                    message.options.push(reader.string());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -47,6 +48,7 @@ export const Poll = {
     },
     fromJSON(object) {
         const message = { ...basePoll };
+        message.options = [];
         if (object.creator !== undefined && object.creator !== null) {
             message.creator = String(object.creator);
         }
@@ -66,10 +68,9 @@ export const Poll = {
             message.title = '';
         }
         if (object.options !== undefined && object.options !== null) {
-            message.options = String(object.options);
-        }
-        else {
-            message.options = '';
+            for (const e of object.options) {
+                message.options.push(String(e));
+            }
         }
         return message;
     },
@@ -78,11 +79,17 @@ export const Poll = {
         message.creator !== undefined && (obj.creator = message.creator);
         message.id !== undefined && (obj.id = message.id);
         message.title !== undefined && (obj.title = message.title);
-        message.options !== undefined && (obj.options = message.options);
+        if (message.options) {
+            obj.options = message.options.map((e) => e);
+        }
+        else {
+            obj.options = [];
+        }
         return obj;
     },
     fromPartial(object) {
         const message = { ...basePoll };
+        message.options = [];
         if (object.creator !== undefined && object.creator !== null) {
             message.creator = object.creator;
         }
@@ -102,10 +109,9 @@ export const Poll = {
             message.title = '';
         }
         if (object.options !== undefined && object.options !== null) {
-            message.options = object.options;
-        }
-        else {
-            message.options = '';
+            for (const e of object.options) {
+                message.options.push(e);
+            }
         }
         return message;
     }

@@ -17,16 +17,13 @@ func CmdCreatePoll() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create-poll [title] [options]",
 		Short: "Create a new poll",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.MinimumNArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			argsTitle, err := cast.ToStringE(args[0])
 			if err != nil {
 				return err
 			}
-			argsOptions, err := cast.ToStringE(args[1])
-			if err != nil {
-				return err
-			}
+			argsOptions := args[1:len(args)]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -50,7 +47,7 @@ func CmdUpdatePoll() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "update-poll [id] [title] [options]",
 		Short: "Update a poll",
-		Args:  cobra.ExactArgs(3),
+		Args:  cobra.MinimumNArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			id, err := strconv.ParseUint(args[0], 10, 64)
 			if err != nil {
@@ -62,10 +59,7 @@ func CmdUpdatePoll() *cobra.Command {
 				return err
 			}
 
-			argsOptions, err := cast.ToStringE(args[2])
-			if err != nil {
-				return err
-			}
+			argsOptions := args[2:len(args)]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {

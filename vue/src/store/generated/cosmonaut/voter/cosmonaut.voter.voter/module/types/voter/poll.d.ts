@@ -4,7 +4,7 @@ export interface Poll {
     creator: string;
     id: number;
     title: string;
-    options: string;
+    options: string[];
 }
 export declare const Poll: {
     encode(message: Poll, writer?: Writer): Writer;

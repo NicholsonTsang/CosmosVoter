@@ -91,7 +91,7 @@ export interface VoterPoll {
   /** @format uint64 */
   id?: string;
   title?: string;
-  options?: string;
+  options?: string[];
 }
 
 export interface VoterQueryAllPollResponse {

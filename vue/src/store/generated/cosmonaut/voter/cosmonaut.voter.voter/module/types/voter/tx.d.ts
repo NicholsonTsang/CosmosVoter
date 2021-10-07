@@ -4,7 +4,7 @@ export declare const protobufPackage = "cosmonaut.voter.voter";
 export interface MsgCreatePoll {
     creator: string;
     title: string;
-    options: string;
+    options: string[];
 }
 export interface MsgCreatePollResponse {
     id: number;
@@ -13,7 +13,7 @@ export interface MsgUpdatePoll {
     creator: string;
     id: number;
     title: string;
-    options: string;
+    options: string[];
 }
 export interface MsgUpdatePollResponse {
 }
